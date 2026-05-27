@@ -1,0 +1,236 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Sora:wght@400;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --teal:#0F6E56;--teal-light:#E1F5EE;--teal-mid:#1D9E75;
+    --amber:#BA7517;--amber-light:#FAEEDA;
+    --coral:#D85A30;--coral-light:#FAECE7;
+    --bg:#F7F9F8;--card:#fff;--border:#E2EAE6;
+    --text:#1A2520;--muted:#6B8070;--pill-bg:#E1F5EE;
+  }
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
+  .app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:56px 1fr;min-height:600px;}
+  /* Topbar */
+  .topbar{grid-column:1/-1;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;}
+  .logo{font-family:'Sora',sans-serif;font-weight:700;font-size:17px;color:var(--teal);letter-spacing:-0.3px;}
+  .logo span{color:var(--teal-mid);font-weight:400;}
+  .badge-status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--teal);background:var(--teal-light);padding:4px 10px;border-radius:20px;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal-mid);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .clinic-name{font-size:13px;color:var(--muted);border-left:1px solid var(--border);padding-left:12px;margin-left:4px;}
+  /* Sidebar */
+  .sidebar{background:#fff;border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:500;transition:all .15s;}
+  .nav-item:hover{background:var(--bg);}
+  .nav-item.active{background:var(--teal-light);color:var(--teal);}
+  .nav-item i{font-size:17px;}
+  .nav-section{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.8px;padding:12px 12px 4px;text-transform:uppercase;}
+  .nav-badge{margin-left:auto;background:var(--coral-light);color:var(--coral);font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;}
+  /* Main */
+  .main{padding:20px;display:flex;flex-direction:column;gap:16px;overflow:auto;}
+  /* Metrics */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .metric-card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:14px 16px;}
+  .metric-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:6px;}
+  .metric-val{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:var(--text);}
+  .metric-sub{font-size:11px;color:var(--teal-mid);margin-top:3px;}
+  /* Two column layout */
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:16px;}
+  .card-title{font-family:'Sora',sans-serif;font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+  .card-title i{font-size:16px;color:var(--teal);}
+  /* WhatsApp chat */
+  .chat-window{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto;}
+  .msg{max-width:85%;padding:8px 12px;border-radius:14px;font-size:12.5px;line-height:1.5;}
+  .msg.user{align-self:flex-end;background:#DCF8C6;color:#1A2520;border-bottom-right-radius:3px;}
+  .msg.bot{align-self:flex-start;background:#F0F0F0;color:#1A2520;border-bottom-left-radius:3px;}
+  .msg .sender{font-size:10px;font-weight:600;color:var(--teal);margin-bottom:3px;}
+  .msg .time{font-size:10px;color:var(--muted);text-align:right;margin-top:2px;}
+  .chat-input-row{display:flex;gap:8px;margin-top:8px;align-items:center;}
+  .chat-input-row input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:12.5px;outline:none;font-family:inherit;}
+  .send-btn{background:var(--teal);color:#fff;border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;}
+  /* Agenda */
+  .agenda-list{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto;}
+  .appt{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:0.5px solid var(--border);}
+  .appt-time{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--teal);min-width:46px;}
+  .appt-info{flex:1;}
+  .appt-pet{font-size:13px;font-weight:500;}
+  .appt-type{font-size:11px;color:var(--muted);}
+  .appt-badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;}
+  .badge-confirmed{background:var(--teal-light);color:var(--teal);}
+  .badge-ai{background:var(--amber-light);color:var(--amber);}
+  .badge-pending{background:#F0F0F0;color:var(--muted);}
+  /* AI response area */
+  .ai-row{display:grid;grid-template-columns:1fr 2fr;gap:16px;}
+  .ai-chat{display:flex;flex-direction:column;gap:6px;}
+  .ai-bubble{background:var(--teal-light);border-radius:12px;padding:11px 14px;font-size:12.5px;line-height:1.6;color:#0F3D2C;position:relative;}
+  .ai-bubble::before{content:'✦';position:absolute;top:-9px;left:12px;font-size:11px;color:var(--teal-mid);background:var(--card);padding:0 4px;}
+  .ai-tag{font-size:10px;background:var(--teal-light);color:var(--teal);padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:5px;font-weight:600;}
+  /* Stats mini */
+  .mini-stats{display:flex;flex-direction:column;gap:8px;}
+  .stat-row{display:flex;align-items:center;gap:10px;}
+  .stat-label{font-size:12px;color:var(--muted);flex:1;}
+  .stat-bar-bg{flex:2;background:var(--bg);border-radius:20px;height:6px;overflow:hidden;}
+  .stat-bar{height:100%;border-radius:20px;background:var(--teal-mid);}
+  .stat-val{font-size:12px;font-weight:600;min-width:28px;text-align:right;}
+  /* WA header */
+  .wa-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:0.5px solid var(--border);}
+  .wa-avatar{width:32px;height:32px;border-radius:50%;background:var(--teal-mid);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;}
+  .wa-name{font-weight:600;font-size:13px;}
+  .wa-online{font-size:10px;color:var(--teal);}
+  .wa-icon{margin-left:auto;font-size:18px;color:#25D366;}
+</style>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">Vet<span>IA</span></div>
+    <div class="clinic-name">Clínica Patas & Vida</div>
+    <div class="badge-status"><span class="dot"></span>IA ativa</div>
+  </div>
+
+  <div class="sidebar">
+    <div class="nav-section">Menu</div>
+    <div class="nav-item active"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Painel</div>
+    <div class="nav-item"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>WhatsApp<span class="nav-badge">3</span></div>
+    <div class="nav-item"><i class="ti ti-calendar" aria-hidden="true"></i>Agenda</div>
+    <div class="nav-item"><i class="ti ti-paw" aria-hidden="true"></i>Pacientes</div>
+    <div class="nav-section">Relatórios</div>
+    <div class="nav-item"><i class="ti ti-chart-bar" aria-hidden="true"></i>Desempenho</div>
+    <div class="nav-item"><i class="ti ti-settings" aria-hidden="true"></i>Configurar IA</div>
+  </div>
+
+  <div class="main">
+
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Consultas hoje</div>
+        <div class="metric-val">12</div>
+        <div class="metric-sub">↑ 3 agendadas pela IA</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Msgs respondidas</div>
+        <div class="metric-val">47</div>
+        <div class="metric-sub">↑ 94% pela IA automática</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Taxa de confirmação</div>
+        <div class="metric-val">89%</div>
+        <div class="metric-sub">↑ +22% vs. mês anterior</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Tempo médio resposta</div>
+        <div class="metric-val">&lt;1min</div>
+        <div class="metric-sub">Antes: 4h sem IA</div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>WhatsApp — Conversa ao vivo</div>
+        <div class="wa-header">
+          <div class="wa-avatar">MS</div>
+          <div><div class="wa-name">Maria Silva</div><div class="wa-online">online agora</div></div>
+          <i class="ti ti-brand-whatsapp wa-icon" aria-hidden="true"></i>
+        </div>
+        <div class="chat-window" id="chatWindow">
+          <div class="msg user"><div class="time">09:14</div>Oi, gostaria de agendar uma consulta pra minha gata Luna</div>
+          <div class="msg bot"><div class="sender">VetIA ✦</div>Olá, Maria! 😊 Tenho horários disponíveis ainda hoje: <strong>14h30</strong> ou <strong>16h00</strong>. Qual prefere?<div class="time">09:14</div></div>
+          <div class="msg user"><div class="time">09:15</div>14h30 tá ótimo!</div>
+          <div class="msg bot"><div class="sender">VetIA ✦</div>Perfeito! Agendamento confirmado para hoje às 14h30. Luna está na nossa agenda 🐱 Precisa de mais alguma informação?<div class="time">09:15</div></div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="msgInput" placeholder="Simular mensagem do cliente..." />
+          <button class="send-btn" onclick="sendMsg()"><i class="ti ti-send" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-calendar" aria-hidden="true"></i>Agenda de hoje</div>
+        <div class="agenda-list">
+          <div class="appt">
+            <div class="appt-time">09:00</div>
+            <div class="appt-info"><div class="appt-pet">Rex — Pastor Alemão</div><div class="appt-type">Check-up anual · João M.</div></div>
+            <span class="appt-badge badge-confirmed">Confirmado</span>
+          </div>
+          <div class="appt">
+            <div class="appt-time">10:30</div>
+            <div class="appt-info"><div class="appt-pet">Mel — Golden Retriever</div><div class="appt-type">Vacinação · Ana P.</div></div>
+            <span class="appt-badge badge-ai">📲 Via IA</span>
+          </div>
+          <div class="appt">
+            <div class="appt-time">11:00</div>
+            <div class="appt-info"><div class="appt-pet">Bolinha — Poodle</div><div class="appt-type">Retorno pós-cirurgia</div></div>
+            <span class="appt-badge badge-confirmed">Confirmado</span>
+          </div>
+          <div class="appt">
+            <div class="appt-time">14:30</div>
+            <div class="appt-info"><div class="appt-pet">Luna — Gata Persa</div><div class="appt-type">Consulta · Maria S.</div></div>
+            <span class="appt-badge badge-ai">📲 Via IA</span>
+          </div>
+          <div class="appt">
+            <div class="appt-time">16:00</div>
+            <div class="appt-info"><div class="appt-pet">Thor — Bulldog</div><div class="appt-type">Dermatologia</div></div>
+            <span class="appt-badge badge-pending">Aguardando</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-row">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-chart-pie" aria-hidden="true"></i>Canais de agendamento</div>
+        <div class="mini-stats" style="margin-top:4px;">
+          <div class="stat-row"><span class="stat-label">WhatsApp IA</span><div class="stat-bar-bg"><div class="stat-bar" style="width:72%"></div></div><span class="stat-val">72%</span></div>
+          <div class="stat-row"><span class="stat-label">Telefone</span><div class="stat-bar-bg"><div class="stat-bar" style="width:18%;background:#9FE1CB"></div></div><span class="stat-val">18%</span></div>
+          <div class="stat-row"><span class="stat-label">Presencial</span><div class="stat-bar-bg"><div class="stat-bar" style="width:10%;background:#B4B2A9"></div></div><span class="stat-val">10%</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-sparkles" aria-hidden="true"></i>O que a IA fez hoje</div>
+        <div class="ai-chat">
+          <div><span class="ai-tag">Agendamento automático</span></div>
+          <div class="ai-bubble">Agendei 3 consultas sem intervenção humana. Enviei lembretes de confirmação para 8 tutores e 7 confirmaram. Luna (14h30) foi incluída agora há pouco via WhatsApp.</div>
+          <div><span class="ai-tag">Pergunta respondida</span></div>
+          <div class="ai-bubble">"Quais vacinas meu cachorro precisa tomar?" — respondi com o protocolo padrão e já ofereci agendamento para vacinação, que foi aceito.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const responses = [
+  "Olá! Posso verificar os horários disponíveis para você. Temos vagas hoje às 15h e amanhã de manhã. Qual prefere? 🐾",
+  "Entendido! Qual o nome do seu pet e qual serviço você precisa?",
+  "Claro! Vou confirmar o agendamento e enviar um lembrete 1 hora antes 😊",
+  "Seu pet pode comer normalmente antes da consulta de rotina. Apenas cirurgias exigem jejum prévio.",
+  "Agendamento confirmado! Você receberá um lembrete automático. Precisa de mais alguma coisa?"
+];
+let rIdx = 0;
+function sendMsg(){
+  const input = document.getElementById('msgInput');
+  const val = input.value.trim();
+  if(!val) return;
+  const cw = document.getElementById('chatWindow');
+  const now = new Date();
+  const t = now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
+  const uMsg = document.createElement('div');
+  uMsg.className='msg user';
+  uMsg.innerHTML=`<div class="time">${t}</div>${val}`;
+  cw.appendChild(uMsg);
+  input.value='';
+  cw.scrollTop=cw.scrollHeight;
+  setTimeout(()=>{
+    const bMsg = document.createElement('div');
+    bMsg.className='msg bot';
+    bMsg.innerHTML=`<div class="sender">VetIA ✦</div>${responses[rIdx%responses.length]}<div class="time">${t}</div>`;
+    cw.appendChild(bMsg);
+    cw.scrollTop=cw.scrollHeight;
+    rIdx++;
+  },900);
+}
+document.getElementById('msgInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg();});
+</script>
