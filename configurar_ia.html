@@ -1,5 +1,87 @@
 
-<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0F6E56;--teal-50:#E1F5EE;--teal-mid:#1D9E75;--teal-100:#9FE1CB;
+  --amber:#BA7517;--amber-50:#FAEEDA;
+  --coral:#993C1D;--coral-50:#FAECE7;
+  --bg:#F7F9F8;--card:#fff;--border:#E2EAE6;
+  --text:#1A2520;--muted:#6B8070;--pill-bg:#E1F5EE;
+}
+body{font-family:var(--font-sans,sans-serif);background:var(--bg);color:var(--text);font-size:13px;}
+.app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:56px 1fr;min-height:720px;}
+.topbar{grid-column:1/-1;background:var(--card);border-bottom:0.5px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;}
+.logo{font-weight:700;font-size:17px;color:var(--teal);}
+.logo span{color:var(--teal-mid);font-weight:400;}
+.badge-status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--teal);background:var(--teal-50);padding:4px 10px;border-radius:20px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal-mid);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.clinic-name{font-size:13px;color:var(--muted);border-left:0.5px solid var(--border);padding-left:12px;margin-left:4px;}
+.sidebar{background:var(--card);border-right:0.5px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:500;}
+.nav-item.active{background:var(--teal-50);color:var(--teal);}
+.nav-item i{font-size:17px;}
+.nav-section{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.8px;padding:12px 12px 4px;text-transform:uppercase;}
+
+.main{padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:16px;}
+.page-title{font-size:18px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;}
+.page-title i{font-size:20px;color:var(--teal);}
+.page-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:16px;}
+.card-title{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:7px;margin-bottom:14px;}
+.card-title i{font-size:16px;color:var(--teal);}
+
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-label{font-size:13px;font-weight:500;color:var(--text);}
+.toggle-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;inset:0;background:#D3D1C7;border-radius:22px;cursor:pointer;transition:.2s;}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;}
+.toggle input:checked+.toggle-slider{background:var(--teal-mid);}
+.toggle input:checked+.toggle-slider::before{transform:translateX(18px);}
+
+.section-label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px;}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.field label{font-size:12px;font-weight:500;color:var(--text);}
+.field input,.field select,.field textarea{border:0.5px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;outline:none;font-family:inherit;color:var(--text);background:var(--card);width:100%;}
+.field textarea{resize:vertical;min-height:80px;line-height:1.5;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--teal-mid);}
+
+.range-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.range-row label{font-size:12px;font-weight:500;color:var(--text);min-width:140px;}
+.range-row input[type=range]{flex:1;}
+.range-val{font-size:13px;font-weight:600;color:var(--teal);min-width:28px;text-align:right;}
+
+.chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.chip{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:0.5px solid var(--border);color:var(--muted);background:var(--card);transition:.15s;}
+.chip.on{background:var(--teal-50);color:var(--teal);border-color:var(--teal-100);}
+
+.preview-box{background:var(--bg);border-radius:10px;padding:14px;border:0.5px solid var(--border);}
+.preview-msg{background:#fff;border-radius:10px;border-bottom-left-radius:3px;padding:10px 12px;font-size:12.5px;line-height:1.6;color:var(--text);margin-bottom:6px;border:0.5px solid var(--border);}
+.preview-tag{font-size:10px;font-weight:600;color:var(--teal);margin-bottom:4px;}
+
+.btn-row{display:flex;gap:10px;justify-content:flex-end;margin-top:4px;}
+.btn-save{background:var(--teal);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;}
+.btn-save i{font-size:15px;}
+.btn-reset{background:var(--card);color:var(--muted);border:0.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;cursor:pointer;font-family:inherit;}
+.saved-toast{display:none;background:var(--teal-50);color:var(--teal);font-size:12px;font-weight:600;padding:8px 14px;border-radius:8px;align-items:center;gap:6px;}
+.saved-toast.show{display:flex;}
+
+.hours-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:12px;}
+.hour-day{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.hour-day-label{font-size:10px;font-weight:600;color:var(--muted);}
+.hour-day-btn{width:32px;height:32px;border-radius:8px;border:0.5px solid var(--border);background:var(--card);cursor:pointer;font-size:11px;font-weight:600;color:var(--muted);}
+.hour-day-btn.on{background:var(--teal-50);color:var(--teal);border-color:var(--teal-100);}
+
+.urgency-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;border:0.5px solid var(--border);margin-bottom:6px;}
+.urgency-row i{font-size:16px;color:var(--coral);}
+.urgency-text{flex:1;font-size:12.5px;}
+.urgency-badge{font-size:10px;font-weight:600;background:var(--coral-50);color:var(--coral);padding:2px 8px;border-radius:20px;}
+</style>
 
 <h2 class="sr-only">Tela de configuração da IA — personalizar comportamento, horários e respostas do assistente</h2>
 
@@ -9,10 +91,10 @@
     <div class="clinic-name">Clínica Patas & Vida</div>
     <div class="badge-status"><span class="dot"></span>IA ativa</div>
   </div>
-  <div class="sidebar"> 
+ <div class="sidebar"> 
   <div class="nav-section">Menu</div>
 
-  <a class="nav-item" href="index.html">
+  <a class="nav-item" href="dashboard.html">
     <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
     Painel
   </a>
@@ -21,8 +103,9 @@
     <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
     WhatsApp
   </a>
+  
 
-  <a class="nav-item" href="page.html">
+  <a class="nav-item" href="#">
     <i class="ti ti-calendar" aria-hidden="true"></i>
     Agenda
   </a>
