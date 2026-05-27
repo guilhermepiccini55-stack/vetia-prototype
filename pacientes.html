@@ -1,0 +1,232 @@
+
+<link rel="stylesheet" href="style.css">
+
+<h2 class="sr-only">Tela de pacientes do VetIA — lista de pets e ficha detalhada do paciente selecionado</h2>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">Vet<span>IA</span></div>
+    <div class="clinic-name">Clínica Patas & Vida</div>
+    <div class="badge-status"><span class="dot"></span>IA ativa</div>
+  </div>
+
+  <div class="sidebar">
+    <div class="nav-section">Menu</div>
+    <div class="nav-item"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Painel</div>
+    <div class="nav-item"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>WhatsApp</div>
+    <div class="nav-item"><i class="ti ti-calendar" aria-hidden="true"></i>Agenda</div>
+    <div class="nav-item active"><i class="ti ti-paw" aria-hidden="true"></i>Pacientes</div>
+    <div class="nav-section">Relatórios</div>
+    <div class="nav-item"><i class="ti ti-chart-bar" aria-hidden="true"></i>Desempenho</div>
+    <div class="nav-item"><i class="ti ti-settings" aria-hidden="true"></i>Configurar IA</div>
+  </div>
+
+  <div class="main">
+    <div class="toolbar">
+      <div class="search-box">
+        <i class="ti ti-search" aria-hidden="true"></i>
+        <input type="text" placeholder="Buscar por pet ou tutor..." id="searchInput" oninput="filterPets()"/>
+      </div>
+      <button class="btn-primary"><i class="ti ti-plus" aria-hidden="true"></i>Novo paciente</button>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="section-title" style="margin-bottom:10px;">Todos os pacientes</div>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="petList">
+
+          <div class="pat-card selected" onclick="selectPet(0)">
+            <div class="pat-avatar" style="background:#E1F5EE;font-size:22px;">🐱</div>
+            <div class="pat-name">Luna</div>
+            <div class="pat-breed">Persa · 3 anos</div>
+            <div class="pat-owner"><i class="ti ti-user" style="font-size:12px;" aria-hidden="true"></i>Maria Silva</div>
+            <div class="pat-status status-ok"><i class="ti ti-check" style="font-size:11px;" aria-hidden="true"></i>Em dia</div>
+          </div>
+
+          <div class="pat-card" onclick="selectPet(1)">
+            <div class="pat-avatar" style="background:#FAEEDA;font-size:22px;">🐶</div>
+            <div class="pat-name">Rex</div>
+            <div class="pat-breed">Pastor Alemão · 5 anos</div>
+            <div class="pat-owner"><i class="ti ti-user" style="font-size:12px;" aria-hidden="true"></i>João Mendes</div>
+            <div class="pat-status status-alert"><i class="ti ti-alert-triangle" style="font-size:11px;" aria-hidden="true"></i>Vacina próxima</div>
+          </div>
+
+          <div class="pat-card" onclick="selectPet(2)">
+            <div class="pat-avatar" style="background:#FAECE7;font-size:22px;">🐶</div>
+            <div class="pat-name">Mel</div>
+            <div class="pat-breed">Golden Retriever · 2 anos</div>
+            <div class="pat-owner"><i class="ti ti-user" style="font-size:12px;" aria-hidden="true"></i>Ana Pereira</div>
+            <div class="pat-status status-ok"><i class="ti ti-check" style="font-size:11px;" aria-hidden="true"></i>Em dia</div>
+          </div>
+
+          <div class="pat-card" onclick="selectPet(3)">
+            <div class="pat-avatar" style="background:#F1EFE8;font-size:22px;">🐩</div>
+            <div class="pat-name">Bolinha</div>
+            <div class="pat-breed">Poodle · 7 anos</div>
+            <div class="pat-owner"><i class="ti ti-user" style="font-size:12px;" aria-hidden="true"></i>Carlos Rocha</div>
+            <div class="pat-status status-due"><i class="ti ti-alert-circle" style="font-size:11px;" aria-hidden="true"></i>Retorno pendente</div>
+          </div>
+
+          <div class="pat-card" onclick="selectPet(4)">
+            <div class="pat-avatar" style="background:#E1F5EE;font-size:22px;">🐕</div>
+            <div class="pat-name">Thor</div>
+            <div class="pat-breed">Bulldog · 4 anos</div>
+            <div class="pat-owner"><i class="ti ti-user" style="font-size:12px;" aria-hidden="true"></i>Fernanda Lima</div>
+            <div class="pat-status status-alert"><i class="ti ti-alert-triangle" style="font-size:11px;" aria-hidden="true"></i>Tratamento ativo</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="detailPanel" class="detail-panel">
+        <div class="detail-header">
+          <div class="detail-avatar" style="background:#E1F5EE;font-size:32px;">🐱</div>
+          <div>
+            <div class="detail-name">Luna</div>
+            <div class="detail-sub">Persa · Fêmea · 3 anos</div>
+            <div class="detail-badges">
+              <span class="pat-status status-ok" style="margin-top:0;"><i class="ti ti-check" style="font-size:11px;" aria-hidden="true"></i>Vacinação em dia</span>
+              <span class="pat-status status-ok" style="margin-top:0;"><i class="ti ti-heart" style="font-size:11px;" aria-hidden="true"></i>Castrada</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">Informações gerais</div>
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">Tutor</div><div class="info-val">Maria Silva</div></div>
+            <div class="info-item"><div class="info-label">WhatsApp</div><div class="info-val" style="color:var(--teal);">(51) 99812-3456</div></div>
+            <div class="info-item"><div class="info-label">Peso</div><div class="info-val">3,8 kg</div></div>
+            <div class="info-item"><div class="info-label">Microchip</div><div class="info-val">985112004512341</div></div>
+            <div class="info-item"><div class="info-label">Nascimento</div><div class="info-val">12/03/2022</div></div>
+            <div class="info-item"><div class="info-label">Próx. consulta</div><div class="info-val" style="color:var(--teal);">Hoje, 14h30</div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">Vacinas</div>
+          <div class="vaccine-list">
+            <div class="vaccine-row">
+              <i class="ti ti-shield-check" style="font-size:16px;color:var(--teal);" aria-hidden="true"></i>
+              <span class="vaccine-name">Antirrábica</span>
+              <span class="vaccine-date">Jan 2025</span>
+              <span class="vbadge vok">Em dia</span>
+            </div>
+            <div class="vaccine-row">
+              <i class="ti ti-shield-check" style="font-size:16px;color:var(--teal);" aria-hidden="true"></i>
+              <span class="vaccine-name">Quádrupla felina</span>
+              <span class="vaccine-date">Mar 2025</span>
+              <span class="vbadge vok">Em dia</span>
+            </div>
+            <div class="vaccine-row">
+              <i class="ti ti-shield" style="font-size:16px;color:var(--amber);" aria-hidden="true"></i>
+              <span class="vaccine-name">FeLV (Leucemia)</span>
+              <span class="vaccine-date">Ago 2025</span>
+              <span class="vbadge vpend">Agendar</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">Histórico de consultas</div>
+          <div class="hist-list">
+            <div class="hist-row">
+              <div class="hist-date">15/04/25</div>
+              <div class="hist-info"><div class="hist-title">Check-up anual</div><div class="hist-desc">Exames normais. Peso estável. Recomendado suplemento ômega-3.</div></div>
+            </div>
+            <div class="hist-row">
+              <div class="hist-date">02/01/25</div>
+              <div class="hist-info"><div class="hist-title">Vacinação antirrábica</div><div class="hist-desc">Aplicação realizada sem intercorrências. Próxima: Jan/2026.</div></div>
+            </div>
+            <div class="hist-row">
+              <div class="hist-date">10/09/24</div>
+              <div class="hist-info"><div class="hist-title">Consulta — vômitos</div><div class="hist-desc">Gastrite leve. Prescrito omeprazol 5mg por 7 dias. Alta com melhora.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-note">
+          <i class="ti ti-sparkles" aria-hidden="true"></i>
+          <div>
+            <div class="ai-note-title">Lembrete automático da IA</div>
+            <div class="ai-note-text">A VetIA enviou lembrete de consulta para Maria Silva ontem às 18h via WhatsApp. Confirmação recebida em menos de 5 minutos. Vacina FeLV com atraso de 3 meses — sugestão de agendamento já enviada automaticamente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const pets=[
+  {name:'Luna',emoji:'🐱',bg:'#E1F5EE',breed:'Persa · Fêmea · 3 anos',owner:'Maria Silva',phone:'(51) 99812-3456',weight:'3,8 kg',chip:'985112004512341',birth:'12/03/2022',next:'Hoje, 14h30',badges:[{txt:'Vacinação em dia',cls:'status-ok',ico:'ti-check'},{txt:'Castrada',cls:'status-ok',ico:'ti-heart'}],vaccines:[{ico:'ti-shield-check',icoc:'var(--teal)',name:'Antirrábica',date:'Jan 2025',bc:'vok',bt:'Em dia'},{ico:'ti-shield-check',icoc:'var(--teal)',name:'Quádrupla felina',date:'Mar 2025',bc:'vok',bt:'Em dia'},{ico:'ti-shield',icoc:'var(--amber)',name:'FeLV (Leucemia)',date:'Ago 2025',bc:'vpend',bt:'Agendar'}],hist:[{date:'15/04/25',title:'Check-up anual',desc:'Exames normais. Peso estável. Recomendado suplemento ômega-3.'},{date:'02/01/25',title:'Vacinação antirrábica',desc:'Aplicação realizada sem intercorrências. Próxima: Jan/2026.'},{date:'10/09/24',title:'Consulta — vômitos',desc:'Gastrite leve. Prescrito omeprazol 5mg por 7 dias.'}],ai:'A VetIA enviou lembrete de consulta para Maria Silva ontem às 18h via WhatsApp. Confirmação recebida em menos de 5 minutos. Vacina FeLV com atraso de 3 meses — sugestão de agendamento já enviada.'},
+  {name:'Rex',emoji:'🐶',bg:'#FAEEDA',breed:'Pastor Alemão · Macho · 5 anos',owner:'João Mendes',phone:'(51) 98765-4321',weight:'32 kg',chip:'941000021583674',birth:'07/06/2020',next:'--',badges:[{txt:'Vacina próxima',cls:'status-alert',ico:'ti-alert-triangle'}],vaccines:[{ico:'ti-shield-check',icoc:'var(--teal)',name:'Antirrábica',date:'Jun 2024',bc:'vok',bt:'Em dia'},{ico:'ti-shield',icoc:'var(--coral)',name:'V10 polivalente',date:'Mai 2024',bc:'vdue',bt:'Vencida'},{ico:'ti-shield',icoc:'var(--amber)',name:'Gripe canina',date:'Set 2025',bc:'vpend',bt:'Agendar'}],hist:[{date:'12/03/25',title:'Consulta ortopédica',desc:'Suspeita de displasia leve no quadril. Solicitado raio-x.'},{date:'20/01/25',title:'Antiparasitário',desc:'Aplicação mensal de antipulgas e carrapatos.'}],ai:'V10 polivalente com validade vencida há 2 meses. A VetIA já enviou 2 lembretes para João Mendes e aguarda confirmação de agendamento.'},
+  {name:'Mel',emoji:'🐶',bg:'#FAECE7',breed:'Golden Retriever · Fêmea · 2 anos',owner:'Ana Pereira',phone:'(51) 91234-5678',weight:'27 kg',chip:'900250000123456',birth:'15/11/2022',next:'10/06/2025',badges:[{txt:'Vacinação em dia',cls:'status-ok',ico:'ti-check'}],vaccines:[{ico:'ti-shield-check',icoc:'var(--teal)',name:'Antirrábica',date:'Nov 2024',bc:'vok',bt:'Em dia'},{ico:'ti-shield-check',icoc:'var(--teal)',name:'V10 polivalente',date:'Nov 2024',bc:'vok',bt:'Em dia'}],hist:[{date:'28/04/25',title:'Vacinação completa',desc:'V10 + antirrábica. Sem reações adversas.'},{date:'05/12/24',title:'Check-up filhote',desc:'Desenvolvimento normal. Dieta equilibrada.'}],ai:'Mel está com todas as vacinas em dia. Próxima consulta agendada automaticamente pela IA para 10/06. Ana já confirmou via WhatsApp.'},
+  {name:'Bolinha',emoji:'🐩',bg:'#F1EFE8',breed:'Poodle · Macho · 7 anos',owner:'Carlos Rocha',phone:'(51) 99000-1122',weight:'5,2 kg',chip:'941000019274561',birth:'03/03/2018',next:'Pendente',badges:[{txt:'Retorno pendente',cls:'status-due',ico:'ti-alert-circle'}],vaccines:[{ico:'ti-shield-check',icoc:'var(--teal)',name:'Antirrábica',date:'Fev 2025',bc:'vok',bt:'Em dia'},{ico:'ti-shield-check',icoc:'var(--teal)',name:'V8 polivalente',date:'Fev 2025',bc:'vok',bt:'Em dia'}],hist:[{date:'02/05/25',title:'Cirurgia — tumor benigno',desc:'Remoção de lipoma no flanco direito. Alta após 24h de observação.'},{date:'10/05/25',title:'Retorno pós-cirurgia',desc:'Cicatrização em andamento. Aguarda segundo retorno.'}],ai:'Bolinha realizou cirurgia em 02/05. Retorno final agendado mas Carlos ainda não confirmou. A VetIA enviou lembrete hoje às 9h — aguardando resposta.'},
+  {name:'Thor',emoji:'🐕',bg:'#E1F5EE',breed:'Bulldog · Macho · 4 anos',owner:'Fernanda Lima',phone:'(51) 99333-7788',weight:'24 kg',chip:'900182000456123',birth:'22/08/2021',next:'Em curso',badges:[{txt:'Tratamento ativo',cls:'status-alert',ico:'ti-alert-triangle'}],vaccines:[{ico:'ti-shield-check',icoc:'var(--teal)',name:'Antirrábica',date:'Ago 2024',bc:'vok',bt:'Em dia'},{ico:'ti-shield',icoc:'var(--amber)',name:'V10 polivalente',date:'Set 2025',bc:'vpend',bt:'Agendar'}],hist:[{date:'20/05/25',title:'Dermatologia — alergia cutânea',desc:'Prescrito prednisolona 10mg + shampoo hipoalergênico 3x/semana.'},{date:'01/04/25',title:'Consulta geral',desc:'Obesidade leve. Recomendada dieta com redução calórica.'}],ai:'Thor está em tratamento ativo para alergia cutânea. VetIA está enviando lembretes diários para Fernanda sobre a medicação e perguntando sobre evolução do quadro.'}
+];
+
+function selectPet(idx){
+  document.querySelectorAll('.pat-card').forEach((c,i)=>{
+    c.classList.toggle('selected',i===idx);
+  });
+  const p=pets[idx];
+  const panel=document.getElementById('detailPanel');
+  panel.innerHTML=`
+    <div class="detail-header">
+      <div class="detail-avatar" style="background:${p.bg};font-size:32px;">${p.emoji}</div>
+      <div>
+        <div class="detail-name">${p.name}</div>
+        <div class="detail-sub">${p.breed}</div>
+        <div class="detail-badges">${p.badges.map(b=>`<span class="pat-status ${b.cls}" style="margin-top:0;"><i class="ti ${b.ico}" style="font-size:11px;" aria-hidden="true"></i>${b.txt}</span>`).join('')}</div>
+      </div>
+    </div>
+    <div>
+      <div class="section-title">Informações gerais</div>
+      <div class="info-grid">
+        <div class="info-item"><div class="info-label">Tutor</div><div class="info-val">${p.owner}</div></div>
+        <div class="info-item"><div class="info-label">WhatsApp</div><div class="info-val" style="color:var(--teal);">${p.phone}</div></div>
+        <div class="info-item"><div class="info-label">Peso</div><div class="info-val">${p.weight}</div></div>
+        <div class="info-item"><div class="info-label">Microchip</div><div class="info-val">${p.chip}</div></div>
+        <div class="info-item"><div class="info-label">Nascimento</div><div class="info-val">${p.birth}</div></div>
+        <div class="info-item"><div class="info-label">Próx. consulta</div><div class="info-val" style="color:var(--teal);">${p.next}</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-title">Vacinas</div>
+      <div class="vaccine-list">${p.vaccines.map(v=>`
+        <div class="vaccine-row">
+          <i class="ti ${v.ico}" style="font-size:16px;color:${v.icoc};" aria-hidden="true"></i>
+          <span class="vaccine-name">${v.name}</span>
+          <span class="vaccine-date">${v.date}</span>
+          <span class="vbadge ${v.bc}">${v.bt}</span>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div>
+      <div class="section-title">Histórico de consultas</div>
+      <div class="hist-list">${p.hist.map(h=>`
+        <div class="hist-row">
+          <div class="hist-date">${h.date}</div>
+          <div class="hist-info"><div class="hist-title">${h.title}</div><div class="hist-desc">${h.desc}</div></div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="ai-note">
+      <i class="ti ti-sparkles" aria-hidden="true"></i>
+      <div>
+        <div class="ai-note-title">Lembrete automático da IA</div>
+        <div class="ai-note-text">${p.ai}</div>
+      </div>
+    </div>`;
+}
+
+function filterPets(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.pat-card').forEach((c,i)=>{
+    const p=pets[i];
+    const match=p.name.toLowerCase().includes(q)||p.owner.toLowerCase().includes(q)||p.breed.toLowerCase().includes(q);
+    c.style.display=match?'':'none';
+  });
+}
+</script>

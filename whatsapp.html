@@ -1,0 +1,208 @@
+<link rel="stylesheet" href="style.css">
+
+<h2 class="sr-only">Fluxo completo de WhatsApp com IA real respondendo como assistente da clínica veterinária</h2>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">Vet<span>IA</span></div>
+    <div class="clinic-name">Clínica Patas & Vida</div>
+    <div class="badge-status"><span class="dot"></span>IA ativa</div>
+  </div>
+
+  <div class="sidebar">
+    <div class="nav-section">Menu</div>
+    <div class="nav-item"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Painel</div>
+    <div class="nav-item active"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>WhatsApp<span class="nav-badge">3</span></div>
+    <div class="nav-item"><i class="ti ti-calendar" aria-hidden="true"></i>Agenda</div>
+    <div class="nav-item"><i class="ti ti-paw" aria-hidden="true"></i>Pacientes</div>
+    <div class="nav-section">Relatórios</div>
+    <div class="nav-item"><i class="ti ti-chart-bar" aria-hidden="true"></i>Desempenho</div>
+    <div class="nav-item"><i class="ti ti-settings" aria-hidden="true"></i>Configurar IA</div>
+  </div>
+
+  <div class="main">
+    <div class="conv-list">
+      <div class="conv-search"><input type="text" placeholder="Buscar conversa..."/></div>
+
+      <div class="conv-item active" onclick="selectConv(this,'Maria Silva','MS','#1D9E75')">
+        <div class="conv-avatar" style="background:#1D9E75;">MS</div>
+        <div class="conv-info">
+          <div class="conv-name">Maria Silva</div>
+          <div class="conv-preview">14h30 tá ótimo!</div>
+        </div>
+        <div class="conv-meta"><span class="conv-time">09:15</span><span class="conv-unread">1</span></div>
+      </div>
+
+      <div class="conv-item" onclick="selectConv(this,'João Mendes','JM','#BA7517')">
+        <div class="conv-avatar" style="background:#BA7517;">JM</div>
+        <div class="conv-info">
+          <div class="conv-name">João Mendes</div>
+          <div class="conv-preview">Boa tarde, sobre o Rex...</div>
+        </div>
+        <div class="conv-meta"><span class="conv-time">08:50</span><span class="conv-unread">2</span></div>
+      </div>
+
+      <div class="conv-item" onclick="selectConv(this,'Ana Pereira','AP','#993C1D')">
+        <div class="conv-avatar" style="background:#993C1D;">AP</div>
+        <div class="conv-info">
+          <div class="conv-name">Ana Pereira</div>
+          <div class="conv-preview">Obrigada pelo lembrete!</div>
+        </div>
+        <div class="conv-meta"><span class="conv-time">08:12</span></div>
+      </div>
+
+      <div class="conv-item" onclick="selectConv(this,'Carlos Rocha','CR','#534AB7')">
+        <div class="conv-avatar" style="background:#534AB7;">CR</div>
+        <div class="conv-info">
+          <div class="conv-name">Carlos Rocha</div>
+          <div class="conv-preview">VetIA: Olá Carlos! Passando...</div>
+        </div>
+        <div class="conv-meta"><span class="conv-time">Ontem</span></div>
+      </div>
+
+      <div class="conv-item" onclick="selectConv(this,'Fernanda Lima','FL','#D85A30')">
+        <div class="conv-avatar" style="background:#D85A30;">FL</div>
+        <div class="conv-info">
+          <div class="conv-name">Fernanda Lima</div>
+          <div class="conv-preview">VetIA: Thor está melhorando?</div>
+        </div>
+        <div class="conv-meta"><span class="conv-time">Ontem</span></div>
+      </div>
+    </div>
+
+    <div class="chat-area">
+      <div class="chat-header">
+        <div class="chat-header-avatar" id="chatAvatar" style="background:#1D9E75;">MS</div>
+        <div>
+          <div class="chat-header-name" id="chatName">Maria Silva</div>
+          <div class="chat-header-status">online agora · tutora da Luna 🐱</div>
+        </div>
+        <div class="chat-header-icons">
+          <i class="ti ti-phone" aria-hidden="true"></i>
+          <i class="ti ti-dots-vertical" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div class="messages" id="messages">
+        <div class="date-divider"><span>Hoje</span></div>
+
+        <div class="msg-wrap in">
+          <div class="bubble in">Oi, gostaria de agendar uma consulta pra minha gata Luna<div class="bubble-time">09:14</div></div>
+        </div>
+        <div class="msg-wrap out">
+          <div class="bubble out"><div class="ai-tag">VetIA ✦</div><div>Olá, Maria! 😊 Tenho horários disponíveis ainda hoje: <strong>14h30</strong> ou <strong>16h00</strong>. Qual prefere?</div><div class="bubble-time">09:14</div></div>
+        </div>
+        <div class="msg-wrap in">
+          <div class="bubble in">14h30 tá ótimo!<div class="bubble-time">09:15</div></div>
+        </div>
+        <div class="msg-wrap out">
+          <div class="bubble out"><div class="ai-tag">VetIA ✦</div><div>Perfeito! Agendado para hoje às <strong>14h30</strong> 🐱 Enviarei um lembrete 1h antes. Precisa de mais alguma coisa?</div><div class="bubble-time">09:15</div></div>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <i class="ti ti-mood-smile" style="font-size:22px;color:#888;" aria-hidden="true"></i>
+        <input type="text" id="msgInput" placeholder="Digite como se fosse o cliente... a IA responde de verdade" />
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()"><i class="ti ti-send" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function now(){const d=new Date();return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');}
+
+function appendMsg(text,type,isAI){
+  const msgs=document.getElementById('messages');
+  const wrap=document.createElement('div');
+  wrap.className='msg-wrap '+(type==='out'?'out':'in');
+  const bubble=document.createElement('div');
+  bubble.className='bubble '+type;
+  if(isAI) bubble.innerHTML=`<div class="ai-tag">VetIA ✦</div><div>${text}</div><div class="bubble-time">${now()}</div>`;
+  else bubble.innerHTML=`${text}<div class="bubble-time">${now()}</div>`;
+  wrap.appendChild(bubble);
+  msgs.appendChild(wrap);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function showTyping(){
+  const msgs=document.getElementById('messages');
+  const wrap=document.createElement('div');
+  wrap.className='msg-wrap in';
+  wrap.id='typingIndicator';
+  wrap.innerHTML=`<div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  msgs.appendChild(wrap);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function removeTyping(){
+  const t=document.getElementById('typingIndicator');
+  if(t) t.remove();
+}
+
+async function sendMessage(){
+  const input=document.getElementById('msgInput');
+  const btn=document.getElementById('sendBtn');
+  const text=input.value.trim();
+  if(!text||btn.disabled) return;
+  input.value='';
+  btn.disabled=true;
+  appendMsg(text,'in',false);
+  showTyping();
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:`Você é a VetIA, assistente virtual inteligente da Clínica Veterinária Patas & Vida, localizada no Sul do Brasil.
+
+Seu papel é atender tutores de pets via WhatsApp com naturalidade, agilidade e simpatia.
+
+Você pode:
+- Agendar, confirmar e remarcar consultas
+- Tirar dúvidas sobre vacinas, medicamentos e cuidados com pets
+- Enviar lembretes automáticos
+- Informar horários disponíveis (segunda a sexta 8h-18h, sábado 8h-12h)
+- Encaminhar urgências para o veterinário humano
+
+Regras:
+- Responda SEMPRE em português do Brasil
+- Seja simpático, breve e direto (máximo 3-4 linhas)
+- Use emojis com moderação (1-2 por mensagem no máximo)
+- Nunca invente informações médicas específicas sem recomendar consulta
+- Se for urgência grave, diga para ligar imediatamente: (51) 3333-4444
+
+A conversa atual é com Maria Silva, tutora da Luna (gata Persa, 3 anos, vacinação em dia). Ela já agendou consulta para hoje às 14h30.`,
+        messages:[{role:'user',content:text}]
+      })
+    });
+    const data=await res.json();
+    removeTyping();
+    const reply=data.content&&data.content[0]&&data.content[0].text?data.content[0].text:'Desculpe, não consegui processar sua mensagem. Tente novamente!';
+    appendMsg(reply,'out',true);
+  }catch(e){
+    removeTyping();
+    appendMsg('Ops! Erro de conexão. Tente novamente em instantes.','out',true);
+  }
+  btn.disabled=false;
+  document.getElementById('msgInput').focus();
+}
+
+document.getElementById('msgInput').addEventListener('keydown',e=>{
+  if(e.key==='Enter') sendMessage();
+});
+
+function selectConv(el,name,initials,color){
+  document.querySelectorAll('.conv-item').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  el.querySelector('.conv-unread')&&el.querySelector('.conv-unread').remove();
+  document.getElementById('chatAvatar').textContent=initials;
+  document.getElementById('chatAvatar').style.background=color;
+  document.getElementById('chatName').textContent=name;
+  const msgs=document.getElementById('messages');
+  msgs.innerHTML=`<div class="date-divider"><span>Hoje</span></div><div class="msg-wrap in"><div class="bubble in">Olá, boa tarde!<div class="bubble-time">${now()}</div></div></div>`;
+}
+</script>

@@ -1,0 +1,176 @@
+
+<link rel="stylesheet" href="style.css">
+
+<h2 class="sr-only">Tela de configuração da IA — personalizar comportamento, horários e respostas do assistente</h2>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">Vet<span>IA</span></div>
+    <div class="clinic-name">Clínica Patas & Vida</div>
+    <div class="badge-status"><span class="dot"></span>IA ativa</div>
+  </div>
+  <div class="sidebar">
+    <div class="nav-section">Menu</div>
+    <div class="nav-item"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Painel</div>
+    <div class="nav-item"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>WhatsApp</div>
+    <div class="nav-item"><i class="ti ti-calendar" aria-hidden="true"></i>Agenda</div>
+    <div class="nav-item"><i class="ti ti-paw" aria-hidden="true"></i>Pacientes</div>
+    <div class="nav-section">Relatórios</div>
+    <div class="nav-item"><i class="ti ti-chart-bar" aria-hidden="true"></i>Desempenho</div>
+    <div class="nav-item active"><i class="ti ti-settings" aria-hidden="true"></i>Configurar IA</div>
+  </div>
+
+  <div class="main">
+    <div>
+      <div class="page-title"><i class="ti ti-sparkles" aria-hidden="true"></i>Configurar assistente IA</div>
+      <div class="page-sub">Personalize como a VetIA se comporta, responde e agenda para sua clínica.</div>
+    </div>
+
+    <div class="two-col">
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <div class="card">
+          <div class="card-title"><i class="ti ti-robot" aria-hidden="true"></i>Identidade da IA</div>
+          <div class="field"><label>Nome do assistente</label><input type="text" value="VetIA" id="botName" oninput="updatePreview()"/></div>
+          <div class="field"><label>Apresentação (primeira mensagem)</label><textarea id="intro" oninput="updatePreview()">Olá! 👋 Sou a VetIA, assistente da Clínica Patas & Vida. Como posso ajudar você e seu pet hoje?</textarea></div>
+          <div class="section-label">Tom de voz</div>
+          <div class="chip-group">
+            <div class="chip on" onclick="toggleChip(this,'tom')">Simpático</div>
+            <div class="chip" onclick="toggleChip(this,'tom')">Formal</div>
+            <div class="chip" onclick="toggleChip(this,'tom')">Divertido</div>
+            <div class="chip" onclick="toggleChip(this,'tom')">Técnico</div>
+          </div>
+          <div class="section-label">Idioma</div>
+          <div class="field"><select><option>Português (Brasil)</option><option>Português (Portugal)</option><option>Espanhol</option></select></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="ti ti-clock" aria-hidden="true"></i>Horário de atendimento</div>
+          <div class="section-label" style="margin-bottom:10px;">Dias ativos</div>
+          <div class="hours-grid">
+            <div class="hour-day"><div class="hour-day-label">Seg</div><button class="hour-day-btn on" onclick="toggleDay(this)">S</button></div>
+            <div class="hour-day"><div class="hour-day-label">Ter</div><button class="hour-day-btn on" onclick="toggleDay(this)">T</button></div>
+            <div class="hour-day"><div class="hour-day-label">Qua</div><button class="hour-day-btn on" onclick="toggleDay(this)">Q</button></div>
+            <div class="hour-day"><div class="hour-day-label">Qui</div><button class="hour-day-btn on" onclick="toggleDay(this)">Q</button></div>
+            <div class="hour-day"><div class="hour-day-label">Sex</div><button class="hour-day-btn on" onclick="toggleDay(this)">S</button></div>
+            <div class="hour-day"><div class="hour-day-label">Sáb</div><button class="hour-day-btn on" onclick="toggleDay(this)">S</button></div>
+            <div class="hour-day"><div class="hour-day-label">Dom</div><button class="hour-day-btn" onclick="toggleDay(this)">D</button></div>
+          </div>
+          <div class="two-col" style="gap:8px;">
+            <div class="field"><label>Abertura</label><input type="time" value="08:00"/></div>
+            <div class="field"><label>Fechamento</label><input type="time" value="18:00"/></div>
+          </div>
+          <div class="field"><label>Mensagem fora do horário</label><textarea style="min-height:56px;">Olá! No momento estamos fora do horário de atendimento. Retornaremos em breve 🐾</textarea></div>
+        </div>
+
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <div class="card">
+          <div class="card-title"><i class="ti ti-toggles" aria-hidden="true"></i>Funcionalidades</div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Agendamento automático</div><div class="toggle-sub">IA agenda e confirma sem intervenção humana</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Lembretes automáticos</div><div class="toggle-sub">Envia lembrete 1h antes da consulta</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Cobrança de confirmação</div><div class="toggle-sub">Pede confirmação 24h antes e libera vaga se não confirmar</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Alerta de vacinas vencidas</div><div class="toggle-sub">Notifica tutores com vacinas próximas do vencimento</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Responder dúvidas gerais</div><div class="toggle-sub">IA tira dúvidas sobre cuidados e medicamentos</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Transferir para humano</div><div class="toggle-sub">Encaminha ao veterinário se não souber responder</div></div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="ti ti-sliders" aria-hidden="true"></i>Comportamento</div>
+          <div class="range-row">
+            <label>Tamanho das respostas</label>
+            <input type="range" min="1" max="3" step="1" value="2" oninput="document.getElementById('szVal').textContent=['Curto','Médio','Detalhado'][this.value-1]"/>
+            <span class="range-val" id="szVal">Médio</span>
+          </div>
+          <div class="range-row">
+            <label>Uso de emojis</label>
+            <input type="range" min="0" max="2" step="1" value="1" oninput="document.getElementById('emoVal').textContent=['Nenhum','Moderado','Bastante'][this.value]"/>
+            <span class="range-val" id="emoVal">Moderado</span>
+          </div>
+          <div class="section-label">Assuntos que a IA pode responder</div>
+          <div class="chip-group">
+            <div class="chip on" onclick="toggleChip(this,'topic')">Agendamento</div>
+            <div class="chip on" onclick="toggleChip(this,'topic')">Vacinas</div>
+            <div class="chip on" onclick="toggleChip(this,'topic')">Medicamentos</div>
+            <div class="chip on" onclick="toggleChip(this,'topic')">Preços</div>
+            <div class="chip" onclick="toggleChip(this,'topic')">Nutrição</div>
+            <div class="chip on" onclick="toggleChip(this,'topic')">Emergências</div>
+          </div>
+          <div class="section-label">Urgências — redirecionar para</div>
+          <div class="urgency-row"><i class="ti ti-phone-call" aria-hidden="true"></i><span class="urgency-text">Telefone de emergência</span><span class="urgency-badge">Sempre ativo</span></div>
+          <div class="field" style="margin-top:6px;margin-bottom:0;"><input type="text" value="(51) 3333-4444 — Dr. Marcos (plantão)"/></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="ti ti-eye" aria-hidden="true"></i>Prévia da saudação</div>
+          <div class="preview-box">
+            <div class="preview-tag" id="previewTag">VetIA ✦</div>
+            <div class="preview-msg" id="previewMsg">Olá! 👋 Sou a VetIA, assistente da Clínica Patas & Vida. Como posso ajudar você e seu pet hoje?</div>
+            <div style="font-size:11px;color:var(--muted);">Assim o cliente verá ao iniciar conversa</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <div class="saved-toast" id="toast"><i class="ti ti-check" style="font-size:15px;" aria-hidden="true"></i>Configurações salvas!</div>
+      <button class="btn-reset" onclick="resetForm()">Restaurar padrão</button>
+      <button class="btn-save" onclick="saveConfig()"><i class="ti ti-device-floppy" aria-hidden="true"></i>Salvar configurações</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleChip(el){
+  el.classList.toggle('on');
+  updatePreview();
+}
+function toggleDay(el){
+  el.classList.toggle('on');
+}
+function updatePreview(){
+  const name=document.getElementById('botName').value||'VetIA';
+  const msg=document.getElementById('intro').value;
+  document.getElementById('previewTag').textContent=name+' ✦';
+  document.getElementById('previewMsg').textContent=msg;
+}
+function saveConfig(){
+  const btn=document.querySelector('.btn-save');
+  btn.textContent='Salvando...';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='<i class="ti ti-device-floppy" aria-hidden="true"></i>Salvar configurações';
+    btn.disabled=false;
+    const toast=document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),3000);
+  },900);
+}
+function resetForm(){
+  document.getElementById('botName').value='VetIA';
+  document.getElementById('intro').value='Olá! 👋 Sou a VetIA, assistente da Clínica Patas & Vida. Como posso ajudar você e seu pet hoje?';
+  updatePreview();
+}
+</script>
