@@ -1,0 +1,211 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0F6E56;--teal-50:#E1F5EE;--teal-mid:#1D9E75;--teal-100:#9FE1CB;
+  --amber:#BA7517;--amber-50:#FAEEDA;
+  --coral:#993C1D;--coral-50:#FAECE7;--coral-400:#D85A30;
+  --gray-50:#F1EFE8;--gray-100:#D3D1C7;--purple:#534AB7;--purple-50:#EEEDFE;
+  --bg:#F7F9F8;--card:#fff;--border:#E2EAE6;--text:#1A2520;--muted:#6B8070;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:13px;}
+.app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:56px 1fr;min-height:720px;}
+.topbar{grid-column:1/-1;background:var(--card);border-bottom:0.5px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;}
+.logo{font-weight:800;font-size:17px;color:var(--teal);}
+.logo span{color:var(--teal-mid);font-weight:400;}
+.badge-status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--teal);background:var(--teal-50);padding:4px 10px;border-radius:20px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal-mid);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.clinic-name{font-size:13px;color:var(--muted);border-left:0.5px solid var(--border);padding-left:12px;margin-left:4px;}
+.sidebar{background:var(--card);border-right:0.5px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:500;}
+.nav-item.active{background:var(--teal-50);color:var(--teal);}
+.nav-item i{font-size:17px;}
+.nav-section{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.8px;padding:12px 12px 4px;text-transform:uppercase;}
+.main{padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;}
+.fin-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.fm{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:14px 16px;}
+.fm-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:6px;}
+.fm-val{font-size:20px;font-weight:700;}
+.fm-sub{font-size:11px;margin-top:3px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:16px;}
+.card-title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;margin-bottom:12px;}
+.card-title i{font-size:16px;color:var(--teal);}
+.fin-legend{display:flex;gap:14px;margin-bottom:8px;}
+.fl{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
+.fld{width:10px;height:10px;border-radius:3px;}
+.fin-table{width:100%;border-collapse:collapse;}
+.fin-table thead tr{border-bottom:0.5px solid var(--border);}
+.fin-table thead th{padding:7px 10px;font-size:10px;font-weight:600;color:var(--muted);text-align:left;text-transform:uppercase;letter-spacing:.4px;}
+.fin-table tbody tr{border-bottom:0.5px solid var(--border);}
+.fin-table tbody tr:hover{background:var(--bg);}
+.fin-table tbody td{padding:9px 10px;font-size:12px;}
+.pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;}
+.filter-row{display:flex;gap:8px;margin-bottom:10px;align-items:center;}
+.filter-row input,.filter-row select{border:0.5px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;outline:none;font-family:inherit;color:var(--text);background:var(--bg);}
+.filter-row input{flex:1;}
+.btn-exp{background:var(--teal);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.donut-wrap{display:flex;align-items:center;gap:16px;}
+.donut-labels{display:flex;flex-direction:column;gap:7px;flex:1;}
+.dlr{display:flex;align-items:center;gap:7px;font-size:12px;}
+.dld{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.dl-name{flex:1;}
+.dl-pct{font-weight:600;}
+.ai-box{background:var(--teal-50);border-radius:8px;padding:10px 12px;display:flex;gap:8px;margin-top:12px;}
+.ai-box i{font-size:16px;color:var(--teal);flex-shrink:0;margin-top:1px;}
+.ai-box-title{font-size:11px;font-weight:600;color:var(--teal);margin-bottom:2px;}
+.ai-box-text{font-size:11.5px;color:#085041;line-height:1.5;}
+</style>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">Vet<span>IA</span></div>
+    <div class="clinic-name">Clínica Patas & Vida</div>
+    <div class="badge-status"><span class="dot"></span>IA ativa</div>
+  </div>
+  
+  <div class="sidebar"> 
+  <div class="nav-section">Menu</div>
+
+  <a class="nav-item" href="dashboard.html">
+    <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
+    Painel
+  </a>
+
+  <a class="nav-item" href="whatsapp.html">
+    <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+    WhatsApp
+  </a>
+  
+
+  <a class="nav-item" href="#">
+    <i class="ti ti-calendar" aria-hidden="true"></i>
+    Agenda
+  </a>
+
+  <a class="nav-item" href="pacientes.html">
+    <i class="ti ti-paw" aria-hidden="true"></i>
+    Pacientes
+  </a>
+
+  <a class="nav-item" href="financeiro.html">
+  <i class="ti ti-cash" aria-hidden="true"></i>
+  Financeiro
+  </a>
+
+  <div class="nav-section">Relatórios</div>
+
+  <a class="nav-item" href="#">
+    <i class="ti ti-chart-bar" aria-hidden="true"></i>
+    Desempenho
+  </a>
+
+  <a class="nav-item active" href="configurar_ia.html">
+    <i class="ti ti-settings" aria-hidden="true"></i>
+    Configurar IA
+  </a>
+  </div>
+
+  <div class="main">
+    <div class="fin-metrics">
+      <div class="fm"><div class="fm-label">Receita — Maio/25</div><div class="fm-val" style="color:var(--teal);">R$ 14.200</div><div class="fm-sub" style="color:var(--teal-mid);">↑ +10,9% vs. Abril</div></div>
+      <div class="fm"><div class="fm-label">Despesas — Maio/25</div><div class="fm-val" style="color:var(--coral-400);">R$ 7.300</div><div class="fm-sub" style="color:var(--coral-400);">↑ +7,3% vs. Abril</div></div>
+      <div class="fm"><div class="fm-label">Lucro líquido</div><div class="fm-val">R$ 6.900</div><div class="fm-sub" style="color:var(--teal-mid);">Margem: 48,6%</div></div>
+      <div class="fm"><div class="fm-label">Ticket médio</div><div class="fm-val">R$ 247</div><div class="fm-sub" style="color:var(--teal-mid);">↑ +18% em 6 meses</div></div>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-chart-bar"></i>Receita × Despesas (6 meses)</div>
+        <div class="fin-legend">
+          <div class="fl"><div class="fld" style="background:var(--teal-mid);"></div>Receita</div>
+          <div class="fl"><div class="fld" style="background:var(--border);"></div>Despesas</div>
+        </div>
+        <div id="chart"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-chart-donut"></i>Receita por tipo de serviço</div>
+        <div class="donut-wrap">
+          <svg viewBox="0 0 120 120" width="110" height="110" style="flex-shrink:0;">
+            <circle cx="60" cy="60" r="46" fill="none" stroke="#E2EAE6" stroke-width="18"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="#1D9E75" stroke-width="18" stroke-dasharray="109.8 289.0" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="#BA7517" stroke-width="18" stroke-dasharray="69.3 289.0" stroke-dashoffset="-109.8" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="#9FE1CB" stroke-width="18" stroke-dasharray="63.6 289.0" stroke-dashoffset="-179.1" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="#D3D1C7" stroke-width="18" stroke-dasharray="46.2 289.0" stroke-dashoffset="-242.7" transform="rotate(-90 60 60)"/>
+            <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#1A2520">48,6%</text>
+            <text x="60" y="69" text-anchor="middle" font-size="9" fill="#6B8070">margem</text>
+          </svg>
+          <div class="donut-labels">
+            <div class="dlr"><div class="dld" style="background:#1D9E75;"></div><span class="dl-name">Consultas</span><span class="dl-pct">38%</span></div>
+            <div class="dlr"><div class="dld" style="background:#BA7517;"></div><span class="dl-name">Cirurgias</span><span class="dl-pct">24%</span></div>
+            <div class="dlr"><div class="dld" style="background:#9FE1CB;"></div><span class="dl-name">Vacinas</span><span class="dl-pct">22%</span></div>
+            <div class="dlr"><div class="dld" style="background:#D3D1C7;"></div><span class="dl-name">Exames</span><span class="dl-pct">16%</span></div>
+          </div>
+        </div>
+        <div class="ai-box">
+          <i class="ti ti-sparkles"></i>
+          <div><div class="ai-box-title">Insight da IA</div><div class="ai-box-text">Cirurgias têm o maior ticket médio (R$1.180). Aumentar comunicação proativa sobre procedimentos eletivos pode elevar a receita em ~18%.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="ti ti-list"></i>Extrato de movimentações</div>
+      <div class="filter-row">
+        <input type="text" placeholder="Buscar transação..."/>
+        <select><option>Todos</option><option>Entradas</option><option>Saídas</option></select>
+        <select><option>Maio 2025</option><option>Abril 2025</option></select>
+        <button class="btn-exp"><i class="ti ti-download"></i>Exportar CSV</button>
+      </div>
+      <table class="fin-table">
+        <thead><tr><th>Data</th><th>Descrição</th><th>Método</th><th>Valor</th><th>Status</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const months=['Jan','Fev','Mar','Abr','Mai','Jun'];
+const rec=[8400,9200,8750,11300,12800,14200];
+const des=[5100,5400,5200,6100,6800,7300];
+const max=Math.max(...rec,...des);
+const W=440,H=130,pad=28,bW=26,gap=12;
+let bars='';
+months.forEach((m,i)=>{
+  const x=pad+i*(bW*2+gap);
+  const rH=Math.round((rec[i]/max)*(H-16));
+  const dH=Math.round((des[i]/max)*(H-16));
+  bars+=`<rect x="${x}" y="${H-rH}" width="${bW}" height="${rH}" rx="3" fill="#1D9E75" opacity=".9"/>`;
+  bars+=`<rect x="${x+bW+2}" y="${H-dH}" width="${bW}" height="${dH}" rx="3" fill="#E2EAE6"/>`;
+  bars+=`<text x="${x+bW}" y="${H+13}" text-anchor="middle" font-size="9" fill="#6B8070">${m}</text>`;
+});
+document.getElementById('chart').innerHTML=`<svg viewBox="0 0 ${W} ${H+16}" xmlns="http://www.w3.org/2000/svg"><line x1="${pad-6}" y1="0" x2="${pad-6}" y2="${H}" stroke="#E2EAE6" stroke-width="1"/><line x1="${pad-6}" y1="${H}" x2="${W}" y2="${H}" stroke="#E2EAE6" stroke-width="1"/>${bars}</svg>`;
+
+const txs=[
+  {d:'28/05',desc:'Consulta — Luna (Maria Silva)',met:'PIX',tipo:'e',val:180,st:'pago'},
+  {d:'28/05',desc:'Vacinação — Mel (Ana Pereira)',met:'Cartão',tipo:'e',val:220,st:'pago'},
+  {d:'27/05',desc:'Cirurgia — Bolinha (Carlos Rocha)',met:'PIX',tipo:'e',val:1400,st:'pago'},
+  {d:'27/05',desc:'Medicamentos — Fornecedor VetPharma',met:'Boleto',tipo:'s',val:980,st:'pago'},
+  {d:'26/05',desc:'Dermatologia — Thor (Fernanda Lima)',met:'Dinheiro',tipo:'e',val:280,st:'pago'},
+  {d:'26/05',desc:'Aluguel clínica — Maio/2025',met:'Transf.',tipo:'s',val:3200,st:'pago'},
+  {d:'25/05',desc:'Check-up — Rex (João Mendes)',met:'PIX',tipo:'e',val:160,st:'pago'},
+  {d:'24/05',desc:'Exame laboratório — Luna',met:'Cartão',tipo:'e',val:320,st:'pendente'},
+  {d:'24/05',desc:'Salário recepcionista',met:'Transf.',tipo:'s',val:1800,st:'agendado'},
+];
+const metColor={PIX:'#E1F5EE|#0F6E56',Cartão:'#EEEDFE|#534AB7',Dinheiro:'#FAEEDA|#BA7517','Boleto':'#F1EFE8|#5F5E5A','Transf.':'#F1EFE8|#5F5E5A'};
+document.getElementById('tbody').innerHTML=txs.map(t=>{
+  const [bg,fc]=(metColor[t.met]||'#F1EFE8|#5F5E5A').split('|');
+  const stBg=t.st==='pago'?'var(--teal-50)':t.st==='pendente'?'var(--amber-50)':'var(--gray-50,#F1EFE8)';
+  const stFc=t.st==='pago'?'var(--teal)':t.st==='pendente'?'var(--amber)':'var(--muted)';
+  return `<tr>
+    <td style="color:var(--muted);">${t.d}</td>
+    <td>${t.desc}</td>
+    <td><span class="pill" style="background:${bg};color:${fc};">${t.met}</span></td>
+    <td style="font-weight:600;color:${t.tipo==='e'?'var(--teal)':'var(--coral-400)'};">${t.tipo==='e'?'+':'−'} R$ ${t.val.toLocaleString('pt-BR')}</td>
+    <td><span class="pill" style="background:${stBg};color:${stFc};">${t.st.charAt(0).toUpperCase()+t.st.slice(1)}</span></td>
+  </tr>`;
+}).join('');
+</script>
